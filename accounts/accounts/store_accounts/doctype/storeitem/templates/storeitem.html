@@ -1,0 +1,20 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h3>{{ title }}</h3>
+
+<div style="display: flex; padding-top: 30px; ">
+    <img src={{ image }} style="width:10em;height:10em;">
+    <div style="width:50em;padding-left: 50px;">
+        <p > {{ desc }} </p> 
+        <Button  class="btn btn-primary" onclick="addItemToCart('{{ name }}')">Add item</Button>
+        <a href="/cart" class="btn btn-secondary" >View Cart</a>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+    <script>
+        {% include "accounts/store_accounts/doctype/storeitem/templates/storeitem.js" %}
+    </script> 
+{% endblock %}

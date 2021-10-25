@@ -1,0 +1,24 @@
+.center-container
+{
+    max-width: auto;
+    margin: auto;
+    margin-top: 1em;
+    align-content: center;
+}
+.carousel-item {
+    padding:20px 20px 20px 20px;
+    background:#e8eded;
+    border-radius:7px;
+    margin-bottom:20px;
+    cursor: pointer; 
+}
+.carousel-item img{
+    width:25em;
+    height:15em;
+}
+.carousel-item div{
+    padding:20px;
+}
+.carousel-item h3{
+    width:30em; 
+}

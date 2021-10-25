@@ -1,0 +1,30 @@
+{%  extends "templates/web.html" %}
+{% block title %}{{store_name}}{% endblock %} 
+{% block page_content %}
+    <div class="center-container">   
+        <div class="row">
+            <div class="col-sm-12">
+                {% include "accounts/www/home/hero_carousel.html" %}</div> 
+            </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Catalog</h5>
+                    <p class="card-text">List of all products here at GE</p>
+                    <a href="/catalog" class="btn btn-primary">View All {{store_items|length}} Products</a>
+                </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Your selections</h5>
+                    <p class="card-text">Manage your selections</p>
+                    <a href="/cart" class="btn btn-secondary">Cart</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}

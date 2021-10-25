@@ -1,0 +1,26 @@
+.center-container
+{
+    max-width: auto;
+    margin: auto;
+    margin-top: 1em;
+    align-content: center;
+}
+.card {
+    margin-bottom:20px;
+}
+
+.card-title  {    
+  display: block;/* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  height: 4.5em;
+  max-height: 4.5em;
+  line-height: 1.5em;
+}
+
+.card img {   
+    width: 100%;
+    height: 15vw;
+    object-fit: fit;
+}

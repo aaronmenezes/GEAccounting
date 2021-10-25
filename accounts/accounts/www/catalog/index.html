@@ -1,0 +1,52 @@
+{%  extends "templates/web.html" %}
+{% block title %}{{store_name}}{% endblock %} 
+{% block page_content %}
+    <div class="center-container">  
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="/cart" class="btn btn-secondary" style="float:right;">Cart</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            {% for item in store_items %}
+                <div class="col-sm-3">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ item.image }}" alt="Card image cap" />
+                        <div class="card-body">
+                            <p class="card-title" onclick="getItemDetails({{item}})">{{ item.name }} </p> 
+                            <p class="card-text" onclick="getItemDetails({{item}})">{{ item.sell_price }} </p> 
+                            <Button class="btn btn-outline-primary" onclick="addItemToCart({{item}},'{{customer_name}}')">Add to Cart</Button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}  
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Select Customer</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <select id="customerSelect" name="customers">
+                            {% for item in customer_list %}
+                                <option value={{item}}>{{item.full_name}}</option> 
+                            {% endfor%}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="addToCustomerCart()">Add to Customers Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock%}

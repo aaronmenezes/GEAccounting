@@ -1,0 +1,59 @@
+{%  extends "templates/web.html" %}
+{% block title %}Cart{% endblock %}
+{% block header %}
+    <!-- <div class="mb-6">{{store_name}}</div> -->
+{% endblock header %}
+{% block page_content %}
+    <div class="center-container">  
+        
+        <h3>{{customer_name}} 's Cart</h3>
+
+        {% if cart_items|length > 0 %}
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Price</th>
+              <th scope="col">Amount</th>
+            </tr>
+            {% for item in cart_items %}
+              <tr>
+                <td> {{ item.item }} </td>
+                <td> {{ item.qty}} </td>
+                <td> {{ item.unit_price }} </td>
+                <td> {{ item.amount }} </td>
+              </tr> 
+            {% endfor %}
+          </tbody> 
+        </table>
+        {% else %}
+          <div  style="margin-top:3em;">
+            <h3> Cart is empty. No window shopper please!</h3>
+          </div>
+        {% endif%}
+        {% if cart_items|length > 0 %}
+          <div class="row" style="margin-top:3em;"> 
+            <div class="col-sm-4">
+              <h3 >Status : {{current_cart.status}}</h3>
+            </div>
+            <div class="col-sm-4">
+              <h3>Total Amount: {{current_cart.total_amount}}</h3>
+            </div> 
+            <div class="col-sm-4">
+              <input id="cityName" type="text" class="form-control" placeholder="Place">
+            </div>
+          </div>
+        {% endif%} 
+          <div class="row" style="margin-top:5em;">
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-secondary" onclick="goBack()">Make more purchases</button> 
+            </div>
+            {% if cart_items|length > 0 %}
+            <div class="col-sm-6">
+              <button style="float:right;" type="button" onclick="checkout('{{current_cart.name}}')" class="btn btn-primary">Create Invoice and Close</button>  
+            </div>
+          {% endif%} 
+          </div>
+    </div>
+{% endblock%}
