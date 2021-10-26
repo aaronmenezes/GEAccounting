@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe import _
 
 class StoreSalesInvoice(Document):
 	def before_save(self):
@@ -19,7 +20,12 @@ class StoreSalesInvoice(Document):
 			return
 		if len(debtors_accounts) == 0:
 			frappe.throw(_('Receivable account not set'))
-			return 
+			return  
+
+		if self.total ==0:
+			for item in self.items: 
+				item.amount = item.qty*item.unit_price
+				self.total += item.amount
 
 		ledger_entry_doc1 = frappe.get_doc({
 			'doctype': 'StoreGL',
@@ -27,7 +33,7 @@ class StoreSalesInvoice(Document):
 			'account': sales_accounts[0],
 			'debit_amount': self.total,
 			'credit_amount': 0,
-			'voucher_type': 'Sales Invoice',
+			'voucher_type': self.doctype,
 			'voucher_no': self.name,
 			'company': store_name.name,
 			'against':self.name 
@@ -39,12 +45,11 @@ class StoreSalesInvoice(Document):
 			'account': debtors_accounts[0],
 			'debit_amount': 0,
 			'credit_amount': self.total,
-			'voucher_type': 'Sales Invoice',
+			'voucher_type': self.doctype,
 			'voucher_no': self.name,
 			'company': store_name.name,
 			'against':self.name
 		})
 
 		ledger_entry_doc1.insert()
-		ledger_entry_doc2.insert()
-		self.reload()
+		ledger_entry_doc2.insert() 

@@ -34,54 +34,37 @@ def  get_column_list():
 	return columns
 
 def get_data():  
-	data = [] 
-	total_assets = 0
-	total_liabilities = 0
-	asset_accounts = frappe.get_all( 'StoreAccounts',
-		filters = { 'root_type': ['=', 'Asset','Expense'] },
-		pluck = 'name'
-	)
-
-	data.append({ 'indent': 0, 'account': 'Assets' })
-
-	for ledger_entry in frappe.get_all( 'StoreGL', group_by='account',
-		filters={ 'account': ['in', asset_accounts] },
-		fields=[ 'account', 'credit_amount' ]
-	):
-		data.append({
-			'intend': 1,
-			'account': ledger_entry.account,
-			'amount': ledger_entry.credit_amount,
-			'parent_account': 'Assets'
-		})
-		total_assets += ledger_entry.credit_amount 
-	data.append({
-		'intend': 0,
-		'account': 'Total Assets',
-		'total': total_assets
-	})
-
+	data = []  
+	total_liabilities = 0  
+	summary = get_gl_amounts('credit_amount','Assets',root_type=['Asset','Expense'])
+	data.extend(summary) 
 	data.append({})
-	liability_accounts = frappe.get_all( 'StoreAccounts',
-		filters = { 'root_type': ['=', 'Income', 'Liability','Equity'] }, 
+	summary = get_gl_amounts('debit_amount','Liabilities',root_type=['Income', 'Liability','Equity'])
+	data.extend(summary)  
+	return data
+
+def get_gl_amounts(field_name,parent_account,root_type):
+	total_amounts=0
+	line_item=[{ 'indent': 0, 'account': parent_account}]
+	root_type.insert(0,'=') 
+	accounts = frappe.get_all( 'StoreAccounts',
+		filters = { 'root_type': root_type},
 		pluck = 'name'
 	)
-
-	data.append({ 'indent': 0, 'account': 'Liabilities' })
 	for ledger_entry in frappe.get_all( 'StoreGL', group_by='account',
-			filters={ 'account': ['in', liability_accounts] },
-			fields=[ 'account', 'debit_amount']
+		filters={ 'account': ['in', accounts] },
+		fields=[ 'account', 'sum(%s) as total_amount'%field_name,field_name ]
 	):
-		data.append({
+		line_item.append({
 			'intend': 1,
 			'account': ledger_entry.account,
-			'amount': ledger_entry.debit_amount,
-			'parent_account': 'Liabilities'
+			'amount': ledger_entry.total_amount,
+			'parent_account': parent_account
 		}) 
-		total_liabilities += ledger_entry.debit_amount 
-	data.append({
+		total_amounts += ledger_entry.total_amount 
+	line_item.append({
 		'intend': 0,
-		'account': 'Total Liabilities',
-		'total': total_liabilities
+		'account': 'Total %s'%parent_account,
+		'total': total_amounts
 	})
-	return data
+	return line_item

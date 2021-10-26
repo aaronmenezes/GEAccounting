@@ -20,6 +20,12 @@ class StorePurchaseInvoice(Document):
 		if len(creditor_accounts) == 0:
 			frappe.throw(_('Payable account not set'))
 			return  
+
+		if self.total ==0:
+			for item in self.items: 
+				item.amount = item.qty*item.unit_price
+				self.total += item.amount
+		
 		ledger_entry_doc1 = frappe.get_doc({
 			'doctype': 'StoreGL',
 			'posting_date': self.date,
