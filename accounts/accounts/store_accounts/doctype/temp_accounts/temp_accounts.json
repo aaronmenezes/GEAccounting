@@ -1,0 +1,114 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:account_name",
+ "creation": "2021-10-27 18:52:09.733350",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "account_name",
+  "account_number",
+  "account_type",
+  "root_type",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_temp_accounts",
+  "parent1"
+ ],
+ "fields": [
+  {
+   "fieldname": "account_name",
+   "fieldtype": "Data",
+   "label": "Account Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "label": "Account Number"
+  },
+  {
+   "fieldname": "account_type",
+   "fieldtype": "Select",
+   "label": "Account Type",
+   "options": "Accumulated Depreciation\nAsset Received But Not Billed\nBank\nCash\nChargeable\nCapital Work in Progress\nCost of Goods Sold\nDepreciation\nEquity\nExpense Account\nExpenses Included In Asset Valuation\nExpenses Included In Valuation\nFixed Asset\nIncome Account\nPayable\nReceivable\nRound Off\nStock\nStock Adjustment\nStock Received But Not Billed\nService Received But Not Billed\nTax\nTemporary"
+  },
+  {
+   "fieldname": "root_type",
+   "fieldtype": "Select",
+   "label": "Root Type",
+   "options": "Asset\nLiability\nIncome\nExpense\nEquity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "label": "Old Parent",
+   "options": "Temp Accounts"
+  },
+  {
+   "fieldname": "parent_temp_accounts",
+   "fieldtype": "Link",
+   "label": "Parent Temp Accounts",
+   "options": "Temp Accounts"
+  },
+  {
+   "fieldname": "parent1",
+   "fieldtype": "Link",
+   "label": "Parent",
+   "options": "Temp Accounts"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2021-10-27 18:52:40.986923",
+ "modified_by": "Administrator",
+ "module": "Store Accounts",
+ "name": "Temp Accounts",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_temp_accounts",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
